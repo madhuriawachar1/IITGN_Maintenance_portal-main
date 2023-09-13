@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="../static/styleadminpage.css">
+    <meta name="csrf-token" content="{{csrf_token()}}">
+</head>
+
+<body>
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+    <!-- <script>
+        function disp()
+        {
+            var x=document.getElementById("domain1").value;
+            if(x=="Civil")
+            document.getElementById("c3").innerHTML="Civil";
+            else if(x=="Electrical")document.getElementById("c3").innerHTML="Electrical";
+            else if(x=="Water Cooling")document.getElementById("c3").innerHTML="Water Cooling";
+            else if(x=="Air Conditioning")document.getElementById("c3").innerHTML="Air Conditioning";
+            else document.getElementById("c3").innerHTML="ALL";
+           
+        }
+            
+    </script> -->
+    <!-- {% with messages = get_flashed_messages() %}  
+         {% if messages %}  
+               {% for message in messages %}  
+                    <p>{{ message }}</p>  
+               {% endfor %}  
+         {% endif %}  
+      {% endwith %}   -->
+
+
+	<div class="body" action="/logout"> 
+    <!-- Heading -->
+	<h1>Maintainence Portal Dashboard</h1>
+    <button class="Home" type="submit" onclick="location.href='/home'";>Back</button>
+    <button class="Logout" type="submit" onclick="location.href='/logout'";>Log Out</button>
+
+	<!-- Menubar -->
+    <!-- <div class="filter">
+    <form id="login" class="input-group" name="myForm" action="/filter2" method="Post" required>
+        
+        <ul>
+           
+            <li><a href="/housing_table">Housing</a></li>
+            <li><a href="#">Hostel</a></li>
+            <li><a href="#">Guest House</a></li>
+            <li><a href="#">Specific Location</a></li>
+            <option value="" >Select Location</option>
+            <option value="All" >All</option>
+			<option value="Hostel">Hostel</option>
+			<option value="Housing">Housing</option>
+			<option value="Guest House">Guest House</option>
+            <option value="Specific Location">Specific Location</option>
+
+        </ul>
+        </select>
+    </form>
+    </div> -->
+    <!--STATS-->
+    <div class="stats">
+        
+        {% if messages %}  
+        <span id="totalComplaints">Total Complaints: {{messages[3][0]}}</span>
+        <span> | </span>
+        <span id="completed">Completed: {{messages[1][0]}}</span>
+        <span> | </span>
+        <span id="In Progress">In Progress: {{messages[2][0]}}</span>
+        <span> | </span>
+        <span id="Pending">Pending: {{messages[0][0]}}</span>
+        {% endif %}
+      </div>
+
+	<!-- Filters -->
+	<!-- <div class="filter">
+		<label for="domain">Domain:</label>
+        <form id="login" class="input-group" name="myForm" action="/filter" method="Post" required>
+            <select id="domain1" name="filter" onchange="this.form.submit()">
+            <option value="" >Select Domain</option>
+            <option value="All" >All</option>
+			<option value="Civil">Civil</option>
+			<option value="Electrical">Electrical</option>
+			<option value="Air-Conditioning">Air-Conditioning</option>
+            <option value="Water Cooler">Water Cooling</option>
+		</select>
+        </form>
+	</div> -->
+    
+	<!-- Complaint Table -->
+	<table>
+		<thead>
+			<tr>
+                <th>Complaint ID</th>
+				<th>User ID</th>
+                <th>Subject</th>
+				<th>Domain</th>
+				<th>Sub-Domain 1</th>
+				<th>Sub-Domain 2</th>
+				<th>Location</th>
+                <th>Specific Location</th>
+                <th>Availability</th>
+                <th>Complaint Status</th>
+				<!-- <th>Image</th> -->
+			</tr>
+		
+        <tbody>
+            {% for item in data %}
+            <tr>
+
+                    <!-- <div class="filter">
+                    <label for="comp_id"></label>
+                    <form id="login" class="input-group" name="myForm" action="">
+                        
+                    
+                    </div> -->
+                <td>{{item[0]}}</td>
+                <td>{{item[1]}}</td>
+                <td>{{item[2]}}</td>
+                <td>{{item[3]}}</td>
+                <td>{{item[4]}}</td>
+                <td>{{item[5]}}</td>
+                <td>{{item[6]}}</td>
+                <td>{{item[7]}}</td>
+                <td>{{item[8]}}</td>
+                <td>{{item[9]}}</td>
+                <!-- <td>
+                    {{item[10]}}
+                    {% if "NULL" in item[10]|string %}
+                    <p>NULL</p>
+                    {%else%}
+                    <a href="{{ url_for('get_image', image_id=item[0]) }}" target="_blank">View Image</a>
+                    {%endif%}
+                </td> -->
+                
+            </tr>
+            {% endfor %}
+        </thed>
+        </tbody>
+    

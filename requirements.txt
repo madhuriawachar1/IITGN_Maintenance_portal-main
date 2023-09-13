@@ -1,0 +1,13 @@
+flask
+flask-MySQLdb
+pyyaml
+mysql.connector
+authlib
+secure-smtplib
+requests
+uuid
+base64
+email
+flask_limiter
+flask_talisman
+flask_wtf

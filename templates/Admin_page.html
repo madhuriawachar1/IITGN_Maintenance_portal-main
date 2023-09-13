@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="../static/styleadminpage.css">
+    <style>
+        @media print {
+			@page {
+				size: landscape;
+				margin: 0;
+			}
+		}
+    </style>
+</head>
+
+<body>
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+
+	<div class="body" action="/logout"> 
+    <!-- Heading -->
+	<h1>Maintainence Portal Dashboard</h1>
+    <button class="Logout" type="submit" onclick="location.href='/logout';">Log Out</button>
+	
+    <div class="stats">
+        {% if messages %}  
+        <span id="totalComplaints">Total Complaints: {{messages[0][0]}}</span>
+        <span> | </span>
+        <span id="completed">Completed: {{messages[2][0]}}</span>
+        <span> | </span>
+        <span id="In Progress">In Progress: {{messages[3][0]}}</span>
+        <span> | </span>
+        <span id="Pending">Pending: {{messages[1][0]}}</span>
+        {% endif %}
+      </div>
+
+	<!-- Filters -->
+	<div class="filter">
+		<label for="domain">Domain:</label>
+        <form id="login" class="input-group" name="myForm" action="/filter" method="Post" required>
+            <input type="hidden" name="csrf_token" value="{{csrf_token()}}"> 
+            <select name="domain">
+            <option value="" >Select Domain</option>
+            <option value="All" >All</option>
+			<option value="Civil">Civil</option>
+			<option value="Electrical">Electrical</option>
+			<option value="Air-Conditioning">Air-Conditioning</option>
+            <option value="Water Cooler">Water Cooling</option>
+		</select>
+
+        <select name = "Area">
+            <option value="" >Select Area</option>
+            <option value="All" >All</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Housing">Housing</option>
+            <option value="Guest House">Guest House</option>
+            <option value="Specific Location">Specific Location</option>
+        </select>
+
+        <select name = "Month">
+            <option value="" >Select Month</option>
+            <option value="All" >All</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+        </select>
+        <input type="date" id="myDate" name="from">
+        <input type="date" id="myDate" name="to">
+        <button type="submit" class="btn" ;>Search</button>
+        
+        </form>
+
+        <button type = "submit" class="btn" onclick="location.href='/reset'";>Reset</button>
+        <button type = "submit" class = "btn" onclick="window.print()">Print</button>
+	</div>
+    
+	<table id = "table">
+		<thead>
+			<tr>
+                <!-- <th>Date</th> -->
+                <!-- <th>Complaint ID</th> -->
+                <th>Date</th>
+				<th>User ID</th>
+                <th>Phone Number</th>
+                <th>Subject</th>
+				<th>Domain</th>
+				<th>Sub-Domain 1</th>
+				<th>Sub-Domain 2</th>
+				<th>Location</th>
+                <th>Specific Location</th>
+                <th>Availability</th>
+                <th>Complaint Status</th>
+                <th>Remarks</th>
+				<th>Image</th>
+
+			</tr>
+		</thead> 
+        <tbody>
+            {% for item in data %}
+            <tr>
+                <!-- <td>{{item[13]}}</td> -->
+                
+                    <label for="comp_id"></label>
+                    <form id="login" class="input-group" name="myForm" action="{{ url_for('change_status', image_id=item[0]) }}" method="Post" required>
+                        
+                <!-- <td>{{item[0]}}</td> -->
+
+                <td>{{item[15]}}</td>      
+                <td>{{item[1]}}</td>
+                <td>{{item[14]}}</td>
+                <td>{{item[2]}}</td>
+                <td>{{item[3]}}</td>
+                <td>{{item[4]}}</td>
+                <td>{{item[5]}}</td>
+                <td>{{item[6]}}</td>
+                <td>{{item[7]}}</td>
+                <td>{{item[8]}}</td>
+                <td>
+                    <div class="filter" >
+                    <label for="domain">{{item[9]}}</label>
+                    <input type="hidden" name="csrf_token" value="{{csrf_token()}}"> 
+                        <select id="domain1" name="filter2" onchange="this.form.submit()">
+                        <option value="">Select Status</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Done">Done</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Unable to process">Unable to process</option>
+                    </td>
+                    <td><input type="text" name = "remarks" placeholder="Remarks"></td>
+                    <td>
+                    </select>
+                    </form>
+                    </div>
+                
+                    <!-- {{item[10]}} -->
+                    {% if "NULL" in item[10]|string %}
+                    <p>NULL</p>
+                    {%else%}
+                    <a href="{{ url_for('get_image', image_id=item[0]) }}" target="_blank">View Image</a>
+                    {%endif%}
+                </td>
+                
+            </tr>
+            {% endfor %}
+        </thed>
+        </tbody>
+    </table>
+    <!-- <script>
+        $(".filter select").on('change', function() {
+      var filters = $.map($(".filter select").toArray(), function(e) {
+        return $(e).val();
+      }).join(".");
+      $("table").find("tr").hide();
+      $("table").find("tr." + filters).show();
+    });
+    // Reset
+    $('button').on('click', function(){
+            $(".filter select").val( $("option:first").val() );
+            $("table").find("tr").show();
+    });
+    </script> -->
+    
+</body>

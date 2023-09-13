@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>image</title>
+    <link rel="stylesheet" href="../static/styleadminpage.css">
+</head>
+<style>
+    img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.portrait {
+    height: 80px;
+    width: 30px;
+}
+
+.landscape {
+    height: 30px;
+    width: 80px;
+}
+
+.square {
+    height: 1100px;
+    width: 1100px;
+}
+</style>
+<body>
+	<div class="square">
+    <img src="data:image/png;base64,{{hex_data}}" alt="image">
+    </div>
+</body>
+</html>
